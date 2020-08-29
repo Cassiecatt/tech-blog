@@ -20,7 +20,7 @@ User.init (
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                leng: [4] // must be atleast 4 characters long
+                len: [4] // must be atleast 4 characters long
             }
         }
     },
@@ -32,3 +32,5 @@ User.init (
         modelName: 'user'
     }
 );
+
+module.exports = User;
