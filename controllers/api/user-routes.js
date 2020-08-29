@@ -52,6 +52,26 @@ router.post('/', (req, res) => {
     })
 });
 
+//Post Route - /api/users/login
+router.post('/login', (req, res) => {
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    })
+    .then(dbUserData => {
+        if(!dbUserData) {
+            res.status(404).json({ message: 'No user with that username'});
+            return;
+        }
+        res.json({ user: dbUserData});
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    })
+});
+
 //Delete Route - /api/users/id
 router.delete('/:id', (req, res) => {
     User.destroy()({
