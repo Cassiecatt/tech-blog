@@ -16,34 +16,26 @@ router.get("/", (req, res) => {
     });
 });
 
-//post route - user login
-router.post('/login', (req, res) => {
-    User.findOne({
-      where: {
-        email: req.body.username
-      }
-    }).then(dbUserData => {
-      if (!dbUserData) {
-        res.status(400).json({ message: 'No user found with that username!' });
-        return;
-      }
+//get route - login page
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
   
-      const password = dbUserData.checkPassword(req.body.password);
-  
-      if (!password) {
-        res.status(400).json({ message: 'Incorrect password!' });
-        return;
-      }
-  
-      req.session.save(() => {
-        // declare session variables
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-  
-        res.json({ user: dbUserData, message: 'You are now logged in!' });
-      });
-    });
+    res.render('login');
   });
+
+  //get route - signup page
+  router.get("/signup", (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect("/");
+      return;
+    }
+  
+    res.render("signup");
+  });
+  
+
 
 module.exports = router;
