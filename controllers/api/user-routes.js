@@ -1,5 +1,5 @@
 const router = require("express").Router(); // express
-const { User } = require("../../models"); // require files in model folder
+const { User, Post, Comment } = require("../../models"); // require files in model folder
 
 //==================== user get routes for testing ===========
 //Get Route - /api/users
@@ -21,6 +21,20 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
+    include: [
+      {
+        model: Post,
+        attributes: ["id", "title", "body", "created_at"],
+      },
+      {
+        model: Comment,
+        attributes: ["id", "comment_body", "created_at"],
+        include: {
+          model: Post,
+          attributes: ["title"],
+        },
+      },
+    ],
   })
     .then((dbUserData) => {
       if (!dbUserData) {
@@ -69,7 +83,7 @@ router.post("/login", (req, res) => {
         return;
       }
 
-      res.json({ user: dbUserData, message: 'You are logged in!' });
+      res.json({ user: dbUserData, message: "You are logged in!" });
     })
     .catch((err) => {
       console.log(err);
