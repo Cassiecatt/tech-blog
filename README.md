@@ -20,4 +20,4 @@ A CMS-style blog site that is similar to a Wordpress site, where "users" can pub
 [Heroku link](https://peaceful-everglades-47924.herokuapp.com/)
 
 ## Screenshot of project
-![Screenshot of final result from application!](https://cassiecatt.github.io/tech/public/assets/app-screenshot.png)
+![Screenshot of final result from application!](https://cassiecatt.github.io/tech-blog/public/assets/app-screenshot.png)
