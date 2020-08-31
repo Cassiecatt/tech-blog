@@ -73,21 +73,21 @@ router.post("/", (req, res) => {
 });
 
 //Post Route - /api/users/login
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   User.findOne({
     where: {
-      email: req.body.username
-    }
-  }).then(dbUserData => {
+      username: req.body.username,
+    },
+  }).then((dbUserData) => {
     if (!dbUserData) {
-      res.status(400).json({ message: 'No user found with that username!' });
+      res.status(400).json({ message: "No user found with that username!" });
       return;
     }
 
     const password = dbUserData.checkPassword(req.body.password);
 
     if (!password) {
-      res.status(400).json({ message: 'Incorrect password!' });
+      res.status(400).json({ message: "Incorrect password!" });
       return;
     }
 
@@ -97,9 +97,20 @@ router.post('/login', (req, res) => {
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
 
-      res.json({ user: dbUserData, message: 'You are now logged in!' });
+      res.json({ user: dbUserData, message: "You are now logged in!" });
     });
   });
+});
+
+//Post route - /api/users/logout
+router.post("/logout", (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
 });
 
 //Delete Route - /api/users/id
