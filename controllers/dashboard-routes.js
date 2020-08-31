@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const { Post } = require("../models/");
 
-//get route - all posts associated with user
+//get route - /dashboard, should show all posts associated with user
 router.get("/", (req, res) => {
     Post.findAll({
         where: {
-            user_id: req.params.id
+            user_id: req.session.user_id
         }
     })
     .then(dbPostData => {
@@ -21,5 +21,7 @@ router.get("/", (req, res) => {
         res.redirect("login");
     });
 });
+
+
 
 module.exports = router;
