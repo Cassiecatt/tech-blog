@@ -28,6 +28,54 @@ router.get("/new", (req, res) => {
     });
   });
 
+//   router.put("/edit/:id", (req, res) => {
+//     Post.update(
+//       {
+//         title: req.body.title,
+//         body: req.body.body,
+//       },
+//       {
+//         where: {
+//           post_id: req.params.post_id,
+//         },
+//       }
+//     )
+//       .then((dbPostData) => {
+//         if (dbPostData) {
+//           const post = dbPostData.get({ plain: true });
+//           res.render("edit-post", {
+//               layout: "dashboard",
+//               post
+//           })
+//         } else {
+//         res.status(404).json({ message: "No post found with that id" });
+//         }
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         res.status(500).json(err);
+//       });
+//   });
+
+router.get("/edit/:id", (req, res) => {
+    Post.findByPk(req.params.id)
+      .then(dbPostData => {
+        if (dbPostData) {
+          const post = dbPostData.get({ plain: true });
+          
+          res.render("edit-post", {
+            layout: "dashboard",
+            post
+          });
+        } else {
+          res.status(404).end();
+        }
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  });
+
 
 
 module.exports = router;
