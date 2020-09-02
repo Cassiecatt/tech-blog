@@ -1,0 +1,26 @@
+const newPostHandler = async function(event) {
+    event.preventDefault();
+  
+    const title = document.querySelector('input[name="post-title"]').value;
+    const body = document.querySelector('textarea[name="post-body"]').value;
+  
+    const storage = localStorage.getItem("storage");
+    await fetch(`/api/post`, {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        body
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${storage}`
+      }
+    });
+  
+    document.location.replace("/dashboard");
+  };
+  
+  document
+    .querySelector("#new-post-form")
+    .addEventListener("submit", newPostHandler);
+  

@@ -16,6 +16,34 @@ router.get("/", (req, res) => {
     });
 });
 
+// router.get("/post/:id", (req, res) => {
+//   Post.findOne(req.params.id, {
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [
+//       User,
+//       {
+//         model: Comment,
+//         include: [User],
+//       },
+//     ],
+//   })
+//     .then((dbPostData) => {
+//       if (dbPostData) {
+//         const post = dbPostData.get({ plain: true });
+
+//         res.render("single-post", { post });
+//       } else {
+//         res.status(404).end();
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).json(err);
+//     });
+// });
+
+
 //get route - login page
 router.get("/login", (req, res) => {
   if (req.session.loggedIn) {

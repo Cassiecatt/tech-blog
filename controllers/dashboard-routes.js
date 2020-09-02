@@ -22,6 +22,12 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/new", (req, res) => {
+    res.render("new-post", {
+      layout: "dashboard"
+    });
+  });
+
 
 
 module.exports = router;
