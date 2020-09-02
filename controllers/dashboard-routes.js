@@ -58,7 +58,11 @@ router.get("/new", (req, res) => {
 //   });
 
 router.get("/edit/:id", (req, res) => {
-    Post.findByPk(req.params.id)
+    Post.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
       .then(dbPostData => {
         if (dbPostData) {
           const post = dbPostData.get({ plain: true });
