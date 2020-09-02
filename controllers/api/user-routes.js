@@ -55,22 +55,23 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   User.create({
     username: req.body.username,
-    password: req.body.password,
-  }).then((dbUserData) => {
+    password: req.body.password
+  })
+  .then(dbUserData => {
     req.session.save(() => {
-      req.session.user_id = dbUserData.id;
-      req.sessions.username = dbUserData.username;
+      req.session.userId = dbUserData.id;
+      req.session.username = dbUserData.username;
       req.session.loggedIn = true;
 
       res.json(dbUserData);
     });
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
   });
-  // .then((dbUserData) => res.json(dbUserData))
-  // .catch((err) => {
-  //   console.log(err);
-  //   res.status(500).json(err);
-  // });
 });
+
 
 //Post Route - /api/users/login
 router.post("/login", (req, res) => {
@@ -115,7 +116,7 @@ router.post("/logout", (req, res) => {
 
 //Delete Route - /api/users/id
 router.delete("/:id", (req, res) => {
-  User.destroy()({
+  User.destroy({
     where: {
       id: req.params.id,
     },
