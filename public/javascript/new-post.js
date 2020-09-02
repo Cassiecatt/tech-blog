@@ -4,8 +4,8 @@ const newPostHandler = async function(event) {
     const title = document.querySelector('input[name="post-title"]').value;
     const body = document.querySelector('textarea[name="post-body"]').value;
   
-    const storage = localStorage.getItem("storage");
-    await fetch(`/api/post`, {
+    const token = localStorage.getItem("token");
+    await fetch(`/api/posts`, {
       method: "POST",
       body: JSON.stringify({
         title,
@@ -13,7 +13,7 @@ const newPostHandler = async function(event) {
       }),
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${storage}`
+        authorization: `Bearer ${token}`
       }
     });
   
