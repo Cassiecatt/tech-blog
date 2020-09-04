@@ -3,9 +3,10 @@ const { Post } = require("../models/");
 
 //get route - /dashboard, should show all posts associated with user
 router.get("/", (req, res) => {
+    console.log(req.session);
     Post.findAll({
         where: {
-            user_id: req.session.user_id
+            user_id: req.session.userId
         }
     })
     .then(dbPostData => {
